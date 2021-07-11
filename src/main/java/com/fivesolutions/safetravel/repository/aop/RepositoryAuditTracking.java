@@ -30,9 +30,9 @@ public class RepositoryAuditTracking {
 	
 	private static final List<String> fieldsIgnore = null;
 	
-	private static final List<String> classesIgnore = Arrays.asList("com.victor.taller.project.entity.Catalog", "com.victor.taller.project.entity.CatalogDetail");
+	private static final List<String> classesIgnore = Arrays.asList("com.fivesolutions.safetravel.entity.Catalog", "com.fivesolutions.safetravel.entity.CatalogDetail");
 	
-	@Pointcut("execution(* com.victor.taller.project.repository..*.save*(java.lang.Object+,..)) " + "&& args(entity,..)")
+	@Pointcut("execution(* com.fivesolutions.safetravel.repository..*.save*(java.lang.Object+,..)) " + "&& args(entity,..)")
 	public void saveMethodExecution(Object entity) {
 		
 	}
