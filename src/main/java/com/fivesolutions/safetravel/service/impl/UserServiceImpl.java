@@ -69,13 +69,27 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserBean getUserByEmail(String email) {
-		
+		UserEntity userEntity = userRepository.findUserByEmail(email);
+		UserBean userBean = new UserBean();
+		if(userEntity != null) {
+			BeanUtils.copyProperties(userEntity, userBean);
+			userBean.setProfile(new ProfileBean());
+			userBean.getProfile().setId(userEntity.getProfile().getId());
+			return userBean;
+		}
 		return null;
 	}
 
 	@Override
 	public UserBean getUserByTokenResetPassword(String tokenResetPassword) {
-		
+		UserEntity userEntity = userRepository.findUserByTokenResetPassword(tokenResetPassword);
+		UserBean userBean = new UserBean();
+		if(userEntity != null) {
+			BeanUtils.copyProperties(userEntity, userBean);
+			userBean.setProfile(new ProfileBean());
+			userBean.getProfile().setId(userEntity.getProfile().getId());
+			return userBean;
+		}
 		return null;
 	}
 
