@@ -76,4 +76,12 @@ public class OrganizationController {
 		return response;
 	}
 	
+	@RequestMapping(value = "/dobi", method = RequestMethod.POST)
+	public GenericResponse<OrganizationBean> deleteOrganizationById(@RequestBody GenericRequest<OrganizationBean> request) {
+		logger.info("OrganizationController.deleteOrganizationById()");
+		GenericResponse<OrganizationBean> response = new GenericResponse<>();
+		organizationService.deletedOrganization(request.getData().getId());
+		return response;
+	}
+	
 }

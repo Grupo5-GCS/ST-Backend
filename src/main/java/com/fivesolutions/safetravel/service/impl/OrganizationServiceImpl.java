@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fivesolutions.safetravel.entity.OrganizationEntity;
 import com.fivesolutions.safetravel.repository.jpa.OrganizationJpaRepository;
@@ -13,6 +14,7 @@ import com.fivesolutions.safetravel.service.OrganizationService;
 import com.fivesolutions.safetravel.soa.bean.OrganizationBean;
 
 @Service
+@Transactional
 public class OrganizationServiceImpl implements OrganizationService {
 
 	@Autowired
@@ -44,7 +46,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 	@Override
 	public void deletedOrganization(Integer organizationId) {
-		// TODO Auto-generated method stub
+		if(organizationId != null) {
+			organizationRepository.delete(organizationId);
+		}
 		
 	}
 

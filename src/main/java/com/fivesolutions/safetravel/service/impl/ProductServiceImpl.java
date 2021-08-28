@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fivesolutions.safetravel.entity.OrganizationEntity;
 import com.fivesolutions.safetravel.entity.ProductEntity;
@@ -17,6 +18,7 @@ import com.fivesolutions.safetravel.soa.bean.OrganizationBean;
 import com.fivesolutions.safetravel.soa.bean.ProductBean;
 
 @Service
+@Transactional
 public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
@@ -39,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductBean> getAllProducts() {
 		List<ProductBean> result = new ArrayList<>();
-		Iterable<ProductEntity> list = productRepository.findAll();
+		Iterable<ProductEntity> list = productRepository.getAllProducts();
 		if(list != null) {
 			list.forEach(productEntity -> {
 				ProductBean productBean = new ProductBean();
@@ -57,7 +59,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ProductBean getProductById(Integer productId) {
-		ProductEntity productEntity = productRepository.findById(productId).orElse(null);
+		ProductEntity productEntity = productRepository.getProductById(productId);
 		ProductBean productBean = new ProductBean();
 		BeanUtils.copyProperties(productEntity, productBean);
 		if(productEntity.getOrganization() != null) {
@@ -109,6 +111,40 @@ public class ProductServiceImpl implements ProductService {
 	public List<Map<String, Object>> getProductByNameAndDates(ProductBean productBean) {
 		
 		return null;
+	}
+
+	@Override
+	public void deleteProduct(Integer productId) {
+		if(productId != null) {
+			productRepository.delete(productId);
+		}
+	}
+
+	@Override
+	public List<ProductBean> getProductsDisabled() {
+		List<ProductEntity> list = productRepository.getAllProductsDisabled();
+		List<ProductBean> result = new ArrayList<ProductBean>();
+		if(list != null) {
+			list.forEach(productEntity -> {
+				ProductBean productBean = new ProductBean();
+				BeanUtils.copyProperties(productEntity, productBean);
+				if(productEntity.getOrganization() != null) {
+					productBean.setOrganization(new OrganizationBean());
+					productBean.getOrganization().setId(productEntity.getOrganization().getId());
+				}
+				result.add(productBean);
+			});
+			return result;
+		}
+		return null;
+	}
+
+	@Override
+	public void updateStatus(Integer productId) {
+		if(productId != null) {
+			productRepository.updateStatus(productId);
+		}
+		
 	}
 
 }

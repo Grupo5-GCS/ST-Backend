@@ -13,5 +13,8 @@ public interface ProductService {
 	abstract List<ProductBean> getProductsByUserPrincipal(Integer organizationId);
 	abstract List<ProductBean> getProductByType(ProductBean productBean);
 	abstract List<Map<String, Object>> getProductByNameAndDates(ProductBean productBean);
+	abstract List<ProductBean> getProductsDisabled();
+	abstract void deleteProduct(Integer productId);
+	abstract void updateStatus(Integer productId);
 	
 }
