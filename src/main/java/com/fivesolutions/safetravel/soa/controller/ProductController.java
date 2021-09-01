@@ -2,6 +2,7 @@ package com.fivesolutions.safetravel.soa.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -148,6 +149,15 @@ public class ProductController {
 		logger.info("ProductController.updateStatusProduct()");
 		GenericResponse<ProductBean> response = new GenericResponse<>();
 		productService.updateStatus(request.getData().getId());
+		return response;
+	}
+	
+	@RequestMapping(value = "/gpbnad", method = RequestMethod.POST)
+	public GenericResponse<List<Map<String, Object>>> getProductByNameAndDates(@RequestBody GenericRequest<ProductBean> request) {
+		logger.info("ProductController.getProductByNameAndDates()");
+		GenericResponse<List<Map<String, Object>>> response = new GenericResponse<>();
+		List<Map<String, Object>> productList= productService.getProductByNameAndDates(request.getData());
+		response.setData(productList);
 		return response;
 	}
 	

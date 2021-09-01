@@ -28,8 +28,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .authorizeRequests()
         .antMatchers("/oauth/**").permitAll()
         .antMatchers("/uc/**").permitAll()
+        .antMatchers("/cmc/**").permitAll()
         .antMatchers("/oc/so/**").permitAll()
+        .antMatchers("/pc/gpbt/**").permitAll()
         .antMatchers("/pc/gi/**").permitAll()
+        .antMatchers("/pc/gpbi/**").permitAll()
+        .antMatchers("/pc/gpbnad/**").permitAll()
+        .antMatchers("/sc/gas/**").permitAll()
         .anyRequest().authenticated()
         .and().cors().configurationSource(corsConfigurationSource());
 	}

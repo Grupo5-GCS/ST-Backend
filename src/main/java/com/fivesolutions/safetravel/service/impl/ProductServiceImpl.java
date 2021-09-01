@@ -109,6 +109,25 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public List<Map<String, Object>> getProductByNameAndDates(ProductBean productBean) {
+		List<Object[]> listResult = productRepository.getProductByNameAndDates(productBean);
+		if(listResult != null) {
+			List<Map<String, Object>> result = new ArrayList<>();
+			listResult.forEach(response -> {
+				Map<String, Object> map = new HashMap<>();
+				map.put("id", response[0]);
+				map.put("name", response[1]);
+				map.put("image", response[2]);
+				map.put("description", response[3]);
+				map.put("price", response[4]);
+				map.put("price_min", response[5]);
+				map.put("price_max", response[6]);
+				map.put("ubication", response[7]);
+				map.put("startDate", response[8]);
+				map.put("endDate", response[9]);
+				result.add(map);
+			});
+			return result;
+		}
 		
 		return null;
 	}

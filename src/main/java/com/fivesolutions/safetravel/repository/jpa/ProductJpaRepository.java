@@ -14,7 +14,7 @@ public interface ProductJpaRepository extends PagingAndSortingRepository<Product
 	@Query("SELECT p FROM ProductEntity p inner join p.organization org where org.id =:organizationId and p.deleted=false and p.status=1")	
 	public List<ProductEntity> getProductsByUserPrincipal(@Param("organizationId") Integer organizationId);
 	
-	@Query("SELECT p FROM ProductEntity p WHERE p.type=:type and deleted=false ")
+	@Query("SELECT p FROM ProductEntity p WHERE p.type=:type and deleted=false and p.status=1")
 	public List<ProductEntity> getProductByType(@Param("type") String type);
 	
 	@Query("SELECT p FROM ProductEntity p inner join p.organization org WHERE p.id=:productId and p.deleted=false and org.deleted=false")
